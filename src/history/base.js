@@ -183,6 +183,10 @@ export class History {
   }
 
   updateRoute (route: Route) {
+    // Fix IE11 behaviour router link / push not working on nested routes
+    if(!!window.MSInputMethodContext && !!document.documentMode && route.fullPath != "/" && this.current.fullPath != "/") {
+      window.location.reload()
+    }
     const prev = this.current
     this.current = route
     this.cb && this.cb(route)
